@@ -7,7 +7,7 @@ class GetUserDetails {
   final AdminUserRepository repository;
   GetUserDetails(this.repository);
 
-  Future<Either<Failure, AdminUserEntity>> call(String userId) async {
+  Future<Either<Failure, AdminUser>> call(String userId) async {
     return await repository.getUserDetails(userId);
   }
 }

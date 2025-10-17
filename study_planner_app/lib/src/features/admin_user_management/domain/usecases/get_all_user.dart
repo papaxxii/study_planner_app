@@ -7,7 +7,7 @@ class GetAllUsers {
   final AdminUserRepository repository;
   GetAllUsers(this.repository);
 
-  Future<Either<Failure, List<AdminUserEntity>>> call() async {
+  Future<Either<Failure, List<AdminUser>>> call() async {
     return await repository.getAllUsers();
   }
 }

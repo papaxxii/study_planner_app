@@ -1,0 +1,37 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "study-planner-app-101325",
+          "appId": "1:8729339745:android:51596ea4f3725b9b88c720",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "study-planner-app-101325",
+          "configurations": {
+            "android": "1:8729339745:android:51596ea4f3725b9b88c720",
+            "ios": "1:8729339745:ios:80e27c37f7304fc588c720",
+            "macos": "1:8729339745:ios:80e27c37f7304fc588c720",
+            "web": "1:8729339745:web:884e61ab487b842588c720",
+            "windows": "1:8729339745:web:a97e5cb99c39d01488c720"
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

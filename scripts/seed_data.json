@@ -1,0 +1,106 @@
+{
+  "users": [
+    {
+      "id": "user_001",
+      "name": "Alice Johnson",
+      "email": "alice@example.com",
+      "role": "client",
+      "profileImageUrl": null
+    },
+    {
+      "id": "user_002",
+      "name": "Bob Smith",
+      "email": "bob@example.com",
+      "role": "client",
+      "profileImageUrl": null
+    },
+    {
+      "id": "user_admin",
+      "name": "Admin User",
+      "email": "admin@example.com",
+      "role": "admin",
+      "profileImageUrl": null
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task_001",
+      "userId": "user_001",
+      "title": "Complete Math Assignment",
+      "description": "Solve problems from Chapter 5",
+      "dueDate": "2025-12-15T17:00:00.000Z",
+      "isCompleted": false,
+      "priority": "high",
+      "createdAt": "2025-11-28T10:00:00.000Z"
+    },
+    {
+      "id": "task_002",
+      "userId": "user_001",
+      "title": "Read Chapter 3 of Literature",
+      "description": "Required reading for class discussion",
+      "dueDate": "2025-12-10T17:00:00.000Z",
+      "isCompleted": false,
+      "priority": "medium",
+      "createdAt": "2025-11-28T10:00:00.000Z"
+    },
+    {
+      "id": "task_003",
+      "userId": "user_001",
+      "title": "Physics Lab Report",
+      "description": "Submit lab report for experiment #7",
+      "dueDate": "2025-12-05T17:00:00.000Z",
+      "isCompleted": true,
+      "priority": "high",
+      "createdAt": "2025-11-20T10:00:00.000Z"
+    },
+    {
+      "id": "task_004",
+      "userId": "user_002",
+      "title": "Chemistry Quiz Preparation",
+      "description": "Prepare for periodic table and bonding quiz",
+      "dueDate": "2025-12-12T17:00:00.000Z",
+      "isCompleted": false,
+      "priority": "high",
+      "createdAt": "2025-11-28T10:00:00.000Z"
+    },
+    {
+      "id": "task_005",
+      "userId": "user_002",
+      "title": "History Essay",
+      "description": "Write 2000 word essay on Renaissance",
+      "dueDate": "2025-12-20T17:00:00.000Z",
+      "isCompleted": false,
+      "priority": "medium",
+      "createdAt": "2025-11-28T10:00:00.000Z"
+    }
+  ],
+  "reminders": [
+    {
+      "id": "reminder_001",
+      "userId": "user_001",
+      "title": "Math Assignment Due",
+      "description": "Don't forget to complete the math assignment",
+      "scheduledTime": "2025-12-15T16:00:00.000Z",
+      "isCompleted": false,
+      "type": "task"
+    },
+    {
+      "id": "reminder_002",
+      "userId": "user_001",
+      "title": "Study Session",
+      "description": "Time for literature reading",
+      "scheduledTime": "2025-12-10T14:00:00.000Z",
+      "isCompleted": false,
+      "type": "schedule"
+    },
+    {
+      "id": "reminder_003",
+      "userId": "user_002",
+      "title": "Chemistry Quiz in 1 hour",
+      "description": "Get ready for your chemistry quiz",
+      "scheduledTime": "2025-12-12T16:00:00.000Z",
+      "isCompleted": false,
+      "type": "task"
+    }
+  ]
+}

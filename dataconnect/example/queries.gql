@@ -1,0 +1,41 @@
+mutation CreateUser @auth(level: USER, insecureReason: "This operation is safe to expose to all logged in users.") {
+  user_insert(data: {
+    id_expr: "uuidV4()"
+    username: "default_username"
+    email: "default_email@example.com"
+    createdAt_expr: "request.time"
+  })
+}
+
+query GetStudyTasksForUser @auth(level: USER) {
+  studyTasks(where: {userId: {eq_expr: "auth.uid"}}) {
+    id
+    title
+    description
+    dueDate
+    estimatedTimeMinutes
+    isCompleted
+  }
+}
+
+mutation UpdateStudyTask($id: UUID!, $isCompleted: Boolean!) @auth(level: USER) {
+  studyTask_update(
+    id: $id,
+    data: {
+      isCompleted: $isCompleted
+    }
+  )
+}
+
+mutation CreateCourse @auth(level: USER) {
+  course_insert(data: {
+    id_expr: "uuidV4()"
+    userId_expr: "auth.uid"
+    name: "New Course"
+    description: "Course Description"
+    instructor: "Instructor Name"
+    startDate: "2024-01-01"
+    endDate: "2024-05-01"
+    createdAt_expr: "request.time"
+  })
+}

@@ -1,0 +1,30 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow authenticated users to read/write their own user document
+    match /users/{userId} {
+      allow read, write: if request.auth.uid == userId;
+    }
+    
+    // Allow authenticated users to manage tasks
+    match /tasks/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Allow authenticated users to manage reminders
+    match /reminders/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Allow authenticated users to manage progress
+    match /progress/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Allow authenticated users to read notifications
+    match /notifications/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}

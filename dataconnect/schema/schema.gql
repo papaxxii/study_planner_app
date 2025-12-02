@@ -1,0 +1,47 @@
+type User @table {
+  username: String! @unique
+  email: String! @unique
+  createdAt: Timestamp!
+  displayName: String
+  profilePictureUrl: String
+}
+
+type Course @table {
+  user: User!
+  name: String!
+  startDate: Date!
+  endDate: Date!
+  createdAt: Timestamp!
+  description: String
+  instructor: String
+}
+
+type StudyTask @table {
+  user: User!
+  course: Course
+  title: String!
+  dueDate: Timestamp!
+  estimatedTimeMinutes: Int!
+  isCompleted: Boolean!
+  createdAt: Timestamp!
+  description: String
+  priority: String
+}
+
+type Subtask @table {
+  studyTask: StudyTask!
+  title: String!
+  isCompleted: Boolean!
+  createdAt: Timestamp!
+  dueDate: Timestamp
+}
+
+type Reminder @table {
+  user: User!
+  studyTask: StudyTask!
+  remindAt: Timestamp!
+  message: String!
+  isSent: Boolean!
+  createdAt: Timestamp!
+  method: String
+}

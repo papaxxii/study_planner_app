@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import '../models/task_model.dart';
+import '../../domain/entities/task_entity.dart';
 import 'task_remote_data_source.dart';
 
 class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
@@ -39,6 +41,57 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
     final snapshot = await taskCollection
         .where('userId', isEqualTo: userId)
         .get();
+    if (snapshot.docs.isEmpty && kDebugMode) {
+      // Provide demo tasks for display in debug mode when Firestore has no tasks for the user.
+      final now = DateTime.now();
+      final demo = <TaskModel>[
+        TaskModel(
+          id: 'demo-1',
+          userId: userId,
+          title: 'Welcome to Study Planner',
+          description: 'Tap to edit or mark as complete',
+          dueDate: DateTime(now.year, now.month, now.day, 18, 0),
+          isCompleted: false,
+          priority: TaskPriority.medium,
+          reminderTime: DateTime.now().add(const Duration(hours: 1)),
+          goalType: GoalType.daily,
+          createdAt: now,
+        ),
+        TaskModel(
+          id: 'demo-2',
+          userId: userId,
+          title: 'Read Chapter 4',
+          description: 'Read and take notes',
+          dueDate: DateTime(
+            now.year,
+            now.month,
+            now.day,
+          ).add(const Duration(days: 1, hours: 9)),
+          isCompleted: false,
+          priority: TaskPriority.high,
+          reminderTime: DateTime.now().add(const Duration(hours: 24)),
+          goalType: GoalType.weekly,
+          createdAt: now.subtract(const Duration(days: 1)),
+        ),
+        TaskModel(
+          id: 'demo-3',
+          userId: userId,
+          title: 'Practice Problems',
+          description: 'Solve 10 problems from the problem set',
+          dueDate: DateTime(
+            now.year,
+            now.month,
+            now.day,
+          ).add(const Duration(days: 7, hours: 14)),
+          isCompleted: false,
+          priority: TaskPriority.low,
+          reminderTime: null,
+          goalType: GoalType.none,
+          createdAt: now.subtract(const Duration(days: 2)),
+        ),
+      ];
+      return demo;
+    }
     return snapshot.docs
         .map(
           (doc) => TaskModel.fromFirebase(
@@ -60,6 +113,15 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
         .where('dueDate', isGreaterThanOrEqualTo: Timestamp.fromDate(start))
         .where('dueDate', isLessThan: Timestamp.fromDate(end))
         .get();
+
+    if (snapshot.docs.isEmpty && kDebugMode) {
+      // If no tasks found for date, provide demo tasks filtered to the requested date for display purposes.
+      final allDemo = await getAllTasks(userId);
+      return allDemo.where((t) {
+        final d = DateTime(t.dueDate.year, t.dueDate.month, t.dueDate.day);
+        return d == start;
+      }).toList();
+    }
 
     return snapshot.docs
         .map(

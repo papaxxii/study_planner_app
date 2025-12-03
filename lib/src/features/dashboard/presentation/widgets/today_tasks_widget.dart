@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:study_planner_app/theme.dart';
 import '../../../task&schedule_management/domain/entities/task_entity.dart';
 import '../../../task&schedule_management/presentation/state/task_state.dart';
+import '../../../task&schedule_management/presentation/providers/task_providers.dart';
+import '../../../progress_tracking/presentation/providers/progress_providers.dart';
+import '../../../user_authentication/presentation/providers/user_auth_providers.dart';
+import '../../../user_authentication/presentation/state/user_auth_state.dart';
 
-class TodayTasksWidget extends StatelessWidget {
+class TodayTasksWidget extends ConsumerWidget {
   final DateTime selectedDate;
   final TaskState taskState;
 
@@ -51,7 +56,7 @@ class TodayTasksWidget extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (taskState is TaskLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -93,19 +98,47 @@ class TodayTasksWidget extends StatelessWidget {
       itemCount: sortedTasks.length,
       itemBuilder: (context, index) {
         final task = sortedTasks[index];
-        return _buildTaskCard(context, task);
+        return _buildTaskCard(context, ref, task);
       },
     );
   }
 
-  Widget _buildTaskCard(BuildContext context, TaskEntity task) {
+  Widget _buildTaskCard(BuildContext context, WidgetRef ref, TaskEntity task) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       child: ListTile(
         leading: Checkbox(
           value: task.isCompleted,
-          onChanged: (_) {
-            // Handle checkbox change - integration with state management
+          onChanged: (val) async {
+            // Toggle completion and persist
+            final updated = TaskEntity(
+              id: task.id,
+              userId: task.userId,
+              title: task.title,
+              description: task.description,
+              dueDate: task.dueDate,
+              isCompleted: val ?? false,
+              priority: task.priority,
+              reminderTime: task.reminderTime,
+              goalType: task.goalType,
+              createdAt: task.createdAt,
+            );
+
+            // Update task
+            await ref.read(taskStateProvider.notifier).updateTask(updated);
+
+            // Refresh tasks and progress for the current user
+            final authState = ref.read(authStateProvider);
+            if (authState is AuthSuccess) {
+              final userId = authState.user.id;
+              await ref.read(taskStateProvider.notifier).fetchAllTasks(userId);
+              await ref
+                  .read(progressStateProvider.notifier)
+                  .fetchUserProgress(userId);
+              await ref
+                  .read(progressStateProvider.notifier)
+                  .fetchDailyProgress(userId, selectedDate);
+            }
           },
         ),
         title: Text(

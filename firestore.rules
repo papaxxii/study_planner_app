@@ -7,9 +7,22 @@ service cloud.firestore {
       allow read, write: if request.auth.uid == userId;
     }
     
-    // Allow authenticated users to manage tasks
-    match /tasks/{document=**} {
-      allow read, write: if request.auth != null;
+    // Tasks: only owners may access their task documents.
+    // - `get` allowed only if the document's `userId` equals the authenticated user
+    // - `list` (query) allowed only if the query includes `where('userId', '==', request.auth.uid)`
+    // - `create` allowed only if the created doc's `userId` equals the authenticated user
+    // - `update`/`delete` allowed only for the owner
+    match /tasks/{taskId} {
+      allow get: if request.auth != null && resource.data.userId == request.auth.uid;
+
+      allow list: if request.auth != null
+                  && request.query.where('userId', '==', request.auth.uid);
+
+      allow create: if request.auth != null
+                    && request.resource.data.userId == request.auth.uid;
+
+      allow update, delete: if request.auth != null
+                            && resource.data.userId == request.auth.uid;
     }
     
     // Allow authenticated users to manage reminders

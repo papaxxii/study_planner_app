@@ -141,7 +141,18 @@ class AddTaskScreen extends ConsumerWidget {
 
                       final userId = authState is AuthSuccess
                           ? authState.user.id
-                          : '';
+                          : null;
+
+                      if (userId == null || userId.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'You must be signed in to create tasks.',
+                            ),
+                          ),
+                        );
+                        return;
+                      }
                       final id =
                           'task_${DateTime.now().millisecondsSinceEpoch}';
 

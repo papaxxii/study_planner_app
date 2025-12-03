@@ -21,6 +21,8 @@ class TaskRepositoryImpl implements TaskRepository {
         dueDate: task.dueDate,
         isCompleted: task.isCompleted,
         priority: task.priority,
+        reminderTime: task.reminderTime,
+        goalType: task.goalType,
         createdAt: task.createdAt,
       );
       await remoteDataSource.addTask(model);
@@ -41,6 +43,8 @@ class TaskRepositoryImpl implements TaskRepository {
         dueDate: task.dueDate,
         isCompleted: task.isCompleted,
         priority: task.priority,
+        reminderTime: task.reminderTime,
+        goalType: task.goalType,
         createdAt: task.createdAt,
       );
       await remoteDataSource.updateTask(model);

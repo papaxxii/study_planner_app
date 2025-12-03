@@ -5,15 +5,17 @@ import 'package:google_fonts/google_fonts.dart';
 class AppColors {
   AppColors._();
 
-  static const Color primary = Color(0xFF4B39EF); // indigo-purple
-  static const Color primaryContainer = Color(0xFFF3E5F5);
-  static const Color secondary = Color(0xFF7C4DFF); // purple accent
-  static const Color background = Color(0xFFF7F9FC);
-  static const Color surface = Colors.white;
+  // Playful palette
+  static const Color primary = Color(0xFFFF6B6B); // coral
+  static const Color primaryContainer = Color(0xFFFFEDEE);
+  static const Color secondary = Color(0xFF4ECDC4); // teal mint
+  static const Color accent = Color(0xFFFFD166); // warm yellow
+  static const Color background = Color(0xFFFFFBF8); // soft cream
+  static const Color surface = Color(0xFFFFFFFF);
   static const Color onPrimary = Colors.white;
-  static const Color onBackground = Color(0xFF0B1020);
-  static const Color disabled = Color(0xFF9AA4B2);
-  static const Color error = Color(0xFFB00020);
+  static const Color onBackground = Color(0xFF1B1B2F);
+  static const Color disabled = Color(0xFFBFC9D9);
+  static const Color error = Color(0xFFEF476F);
 }
 
 /// Builds a TextTheme using two Google fonts:
@@ -21,30 +23,31 @@ class AppColors {
 /// - Inter for body text and small labels
 TextTheme _buildAppTextTheme(TextTheme base) {
   return base.copyWith(
-    displayLarge: GoogleFonts.poppins(
+    // Use a playful rounded display font for headings
+    displayLarge: GoogleFonts.baloo2(
       fontSize: 57,
       fontWeight: FontWeight.w700,
       height: 1.1,
     ),
-    displayMedium: GoogleFonts.poppins(
+    displayMedium: GoogleFonts.baloo2(
       fontSize: 45,
       fontWeight: FontWeight.w700,
       height: 1.1,
     ),
-    displaySmall: GoogleFonts.poppins(
+    displaySmall: GoogleFonts.baloo2(
       fontSize: 36,
       fontWeight: FontWeight.w600,
       height: 1.08,
     ),
-    headlineLarge: GoogleFonts.poppins(
+    headlineLarge: GoogleFonts.baloo2(
       fontSize: 32,
       fontWeight: FontWeight.w600,
     ),
-    headlineMedium: GoogleFonts.poppins(
+    headlineMedium: GoogleFonts.baloo2(
       fontSize: 28,
       fontWeight: FontWeight.w600,
     ),
-    titleLarge: GoogleFonts.poppins(fontSize: 22, fontWeight: FontWeight.w600),
+    titleLarge: GoogleFonts.poppins(fontSize: 22, fontWeight: FontWeight.w700),
     titleMedium: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600),
     titleSmall: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w600),
     bodyLarge: GoogleFonts.inter(
@@ -82,14 +85,14 @@ final ColorScheme _lightColorScheme = ColorScheme(
 
 final ColorScheme _darkColorScheme = ColorScheme(
   brightness: Brightness.dark,
-  primary: Color(0xFF7C4DFF),
+  primary: AppColors.primary,
   onPrimary: Colors.black,
   primaryContainer: Color(0xFF4A2F68),
-  secondary: Color(0xFFCE93D8),
+  secondary: AppColors.secondary,
   onSecondary: Colors.black,
   error: AppColors.error,
   onError: Colors.white,
-  surface: Color(0xFF111319),
+  surface: Color(0xFF0F1724),
   onSurface: Colors.white,
 );
 
@@ -126,12 +129,14 @@ class AppTheme {
           backgroundColor: _lightColorScheme.primary,
           foregroundColor: _lightColorScheme.onPrimary,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(20),
           ),
+          elevation: 4,
           textStyle: GoogleFonts.inter(
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
             fontSize: 16,
           ),
+          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -175,10 +180,10 @@ class AppTheme {
       ),
       cardTheme: const CardThemeData(
         color: AppColors.surface,
-        elevation: 2,
-        margin: EdgeInsets.symmetric(vertical: 6, horizontal: 0),
+        elevation: 6,
+        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 0),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
+          borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
       ),
       snackBarTheme: SnackBarThemeData(
